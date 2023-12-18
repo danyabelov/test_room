@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, viewsets
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
 
 from .models import Reserve, Room
 from .permisions import IsAdminOrReadOnlyPermission
@@ -11,10 +12,7 @@ from .utils import date_format_test, free_rooms
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     permission_classes = [IsAdminOrReadOnlyPermission]
-    filter_backends = (
-        DjangoFilterBackend,
-        filters.OrderingFilter
-    )
+    filter_backends = (DjangoFilterBackend)
     filterset_fields = ('cost', 'place_quantity')
     ordering_fields = ('cost', 'place_quantity')
     ordering = ('cost',)

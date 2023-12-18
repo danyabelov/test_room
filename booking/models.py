@@ -4,12 +4,15 @@ from users.models import User
 
 class Room(models.Model):
     number = models.SmallIntegerField('Номер', unique=True, help_text='Номер комнаты')
-    cost = models.IntegerField('Стоимость', default=0, help_text='Стоимость/сут.')
+    cost = models.DecimalField('Стоимость', default=0, help_text='Стоимость/сут.', decimal_places=2, max_digits=8)
     place_quantity = models.SmallIntegerField('Количество мест', default=1, help_text='Количество мест')
 
     class Meta:
         verbose_name = 'комната'
         verbose_name_plural = 'комнаты'
+
+        def __str__(self):
+            return f"Комната №{self.number}"
 
 
 class Reserve(models.Model):
